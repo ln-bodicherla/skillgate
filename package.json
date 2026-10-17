@@ -1,7 +1,7 @@
 {
   "name": "skillgate",
   "version": "0.2.0",
-  "description": "Sandbox, compare, review and pin agent skill updates",
+  "description": "A firewall for AI agent skill updates: catches when an update quietly changes what a skill does, not just what it outputs",
   "type": "module",
   "license": "Apache-2.0",
   "engines": {

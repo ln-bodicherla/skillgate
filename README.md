@@ -1,8 +1,35 @@
 # SkillGate
 
-**Review what a skill update does before accepting it.** A local, open-source CLI that compares skill versions in disposable Linux sandboxes, checks permission policies, and pins accepted content.
+**A firewall for AI agent skill updates: it catches when an update quietly changes what a skill _does_, not just what it outputs.**
 
-An update can keep passing output tests while introducing credential reads, network attempts, or extra files. SkillGate compares observed behavior as well as results. It supports scripts, recorded tool plans, and interactive agents that request tools through a JSON-lines protocol. The core has no npm dependencies or LLM API requirement.
+## What it means
+
+AI agents (Claude Code, Codex and others) load **skills**: folders of instructions and scripts that teach them a task. Skills get updated, and an update can still produce the right answer while also doing something new behind your back.
+
+SkillGate runs the old and new versions of a skill side by side in an isolated sandbox, on the same task, and compares what each one actually did:
+
+| It checks                     | Example of what it catches                    |
+| ----------------------------- | --------------------------------------------- |
+| Files read                    | The update starts reading `~/.ssh` or `.env`  |
+| Network attempts              | The update tries to contact an outside server |
+| Programs started              | The update launches `curl` or a shell         |
+| Files written                 | The update leaves an extra file behind        |
+| Whether the task still passes | The update breaks the expected output         |
+
+Then it gives one decision:
+
+- **PASS**: the new version behaved like the old one in every tested scenario.
+- **HOLD**: the behavior changed. The report shows exactly what changed, so you can decide whether to accept it.
+
+Once you accept a version, SkillGate **pins** its exact content. If the skill changes later without a review, SkillGate flags it as drift, and the optional Claude Code hook blocks it from running.
+
+In one line: **SkillGate runs the old and new versions of a skill side by side in a sandbox and holds the update if the new one starts doing things the old one didn't, even when its output still looks correct.**
+
+PASS means "no change observed in the tested scenarios", not "certified safe". See [decisions and limits](#decisions-and-limits).
+
+## Details
+
+SkillGate is a local, open-source CLI that compares skill versions in disposable Linux sandboxes, checks permission policies, and pins accepted content. It supports scripts, recorded tool plans, and interactive agents that request tools through a JSON-lines protocol. The core has no npm dependencies or LLM API requirement.
 
 ## Get it from GitHub
 
