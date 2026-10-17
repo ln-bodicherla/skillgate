@@ -7,7 +7,7 @@ export async function claudeHook(configPath, event) {
     hookSpecificOutput: {
       hookEventName: "PreToolUse",
       permissionDecision: "deny",
-      permissionDecisionReason: "Skillwall: " + reason,
+      permissionDecisionReason: "SkillGate: " + reason,
     },
   });
   try {
@@ -46,7 +46,7 @@ export async function claudeHook(configPath, event) {
     return {
       hookSpecificOutput: {
         hookEventName: "PreToolUse",
-        additionalContext: `Skillwall verified ${name} at ${result.expected}. This content pin does not certify safety.`,
+        additionalContext: `SkillGate verified ${name} at ${result.expected}. This content pin does not certify safety.`,
       },
     };
   } catch (error) {

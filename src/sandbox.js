@@ -104,7 +104,7 @@ export async function doctor(runner = { type: "bubblewrap" }) {
   if (probe.code === 0) {
     const { mkdtemp, rm } = await import("node:fs/promises");
     const { tmpdir } = await import("node:os");
-    const dir = await mkdtemp(join(tmpdir(), "skillwall-doctor-"));
+    const dir = await mkdtemp(join(tmpdir(), "skillgate-doctor-"));
     let lease;
     try {
       lease = await quotaWorkspace(join(dir, "mount"), 8);

@@ -18,8 +18,8 @@ Paths resolve relative to this mapping file. The mapping name must match the ski
 
 ```sh
 node src/cli.js pin --skill installed/invoices --name invoices --lock skills.lock.json
-node src/cli.js claude-settings --config skillwall-claude.json --out skillwall-settings.json
-claude --settings /absolute/path/skillwall-settings.json
+node src/cli.js claude-settings --config skillgate-claude.json --out skillgate-settings.json
+claude --settings /absolute/path/skillgate-settings.json
 ```
 
 The generator writes a new settings file and does not change any existing Claude settings. Claude's `--settings` loads it. Registered unchanged skills retain the normal permission flow; the hook never returns an automatic permission grant. Drift, missing files, invalid locks and unknown invocation names return deny. Runtime hook failure is blocked by the generated `onFailure` setting. Review updates with `accept`, then update the installed content to the accepted digest before invoking it again.
@@ -28,7 +28,7 @@ Test the hook without a model call:
 
 ```sh
 printf '%s\n' '{"hook_event_name":"PreToolUse","tool_name":"Skill","tool_input":{"skill":"invoices"}}' |
-  node src/cli.js claude-hook --config skillwall-claude.json
+  node src/cli.js claude-hook --config skillgate-claude.json
 ```
 
 Protocol tests cover match, drift, unknown mappings, missing state and generated fail-closed settings. A live model session has not been used for validation. Official schema: https://code.claude.com/docs/en/hooks

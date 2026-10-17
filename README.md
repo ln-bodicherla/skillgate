@@ -1,14 +1,14 @@
-# Skill Update Firewall
+# SkillGate
 
 **Review what a skill update does before accepting it.** A local, open-source CLI that compares skill versions in disposable Linux sandboxes, checks permission policies, and pins accepted content.
 
-An update can keep passing output tests while introducing credential reads, network attempts, or extra files. Skill Update Firewall compares observed behavior as well as results. It supports scripts, recorded tool plans, and interactive agents that request tools through a JSON-lines protocol. The core has no npm dependencies or LLM API requirement.
+An update can keep passing output tests while introducing credential reads, network attempts, or extra files. SkillGate compares observed behavior as well as results. It supports scripts, recorded tool plans, and interactive agents that request tools through a JSON-lines protocol. The core has no npm dependencies or LLM API requirement.
 
 ## Get it from GitHub
 
 ```sh
-git clone https://github.com/ln-bodicherla/skill-update-firewall.git
-cd skill-update-firewall
+git clone https://github.com/ln-bodicherla/skillgate.git
+cd skillgate
 node src/cli.js doctor
 node scripts/demo.js agent
 ```
@@ -125,10 +125,10 @@ Read [SECURITY.md](SECURITY.md). Bubblewrap shares the host kernel. The default 
 
 ```sh
 npm run check
-SKILLWALL_REQUIRE_SANDBOX=1 npm test
+SKILLGATE_REQUIRE_SANDBOX=1 npm test
 npm pack --dry-run
 ```
 
-Integration tests execute real Bubblewrap and strace. Missing local sandbox support is an explicit skip unless `SKILLWALL_REQUIRE_SANDBOX=1` is set. Cgroup tests separately detect host support. The VM worker and transfer protocol are tested locally; a separate guest is required to test the entire SSH backend.
+Integration tests execute real Bubblewrap and strace. Missing local sandbox support is an explicit skip unless `SKILLGATE_REQUIRE_SANDBOX=1` is set. Cgroup tests separately detect host support. The VM worker and transfer protocol are tested locally; a separate guest is required to test the entire SSH backend.
 
-Node 22 and newer are supported. `.tools/`, reports, demo output and dependencies are ignored by Git. `SKILLWALL_STRACE` may select a trusted strace binary. See [CONTRIBUTING.md](CONTRIBUTING.md). Apache-2.0 licensed.
+Node 22 and newer are supported. `.tools/`, reports, demo output and dependencies are ignored by Git. `SKILLGATE_STRACE` may select a trusted strace binary. See [CONTRIBUTING.md](CONTRIBUTING.md). Apache-2.0 licensed.

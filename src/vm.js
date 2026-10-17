@@ -190,7 +190,7 @@ export async function worker(request) {
     throw new Error("Invalid worker request.");
   const health = await doctor();
   if (!health.ok) throw new Error(health.reason);
-  const dir = await mkdtemp(join(tmpdir(), "skillwall-worker-"));
+  const dir = await mkdtemp(join(tmpdir(), "skillgate-worker-"));
   try {
     for (const name of ["skill", "fixture", "checks"])
       await unpackTree(request[name], join(dir, name));

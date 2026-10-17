@@ -15,7 +15,7 @@ import { copyTree } from "../src/files.js";
 import { execute } from "../src/process.js";
 
 async function temp(fn) {
-  const dir = await mkdtemp(join(tmpdir(), "skillwall-feature-"));
+  const dir = await mkdtemp(join(tmpdir(), "skillgate-feature-"));
   try {
     await fn(dir);
   } finally {
@@ -26,7 +26,7 @@ async function ready(t, runner) {
   const health = await doctor(runner);
   if (health.ok) return true;
   if (
-    process.env.SKILLWALL_REQUIRE_SANDBOX &&
+    process.env.SKILLGATE_REQUIRE_SANDBOX &&
     (!runner || runner.type === "bubblewrap")
   )
     assert.fail(health.reason);

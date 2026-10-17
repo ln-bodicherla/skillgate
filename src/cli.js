@@ -3,15 +3,15 @@ import { doctor } from "./sandbox.js";
 import { pin, verifyLock, accept } from "./lock.js";
 import { compare } from "./compare.js";
 import { runPinned, installPinned } from "./lifecycle.js";
-const help = `skillwall doctor [--runner bubblewrap|cgroup|vm] [--vm-host HOST --vm-cli PATH]
-skillwall compare --old DIR --new DIR --scenario FILE --out NEW_DIRECTORY [runner options]
-skillwall pin --skill DIR --name NAME --lock FILE
-skillwall verify --skill DIR --name NAME --lock FILE
-skillwall accept --old DIR --new DIR --scenario FILE --out NEW_DIRECTORY --name NAME --lock FILE [runner options]
-skillwall run --skill DIR --name NAME --lock FILE --scenario FILE --out NEW_DIRECTORY [runner options]
-skillwall claude-settings --config FILE --out NEW_SETTINGS_FILE
-skillwall claude-hook --config FILE (hook JSON on stdin)
-skillwall install --skill DIR --name NAME --lock FILE --store DIRECTORY
+const help = `skillgate doctor [--runner bubblewrap|cgroup|vm] [--vm-host HOST --vm-cli PATH]
+skillgate compare --old DIR --new DIR --scenario FILE --out NEW_DIRECTORY [runner options]
+skillgate pin --skill DIR --name NAME --lock FILE
+skillgate verify --skill DIR --name NAME --lock FILE
+skillgate accept --old DIR --new DIR --scenario FILE --out NEW_DIRECTORY --name NAME --lock FILE [runner options]
+skillgate run --skill DIR --name NAME --lock FILE --scenario FILE --out NEW_DIRECTORY [runner options]
+skillgate claude-settings --config FILE --out NEW_SETTINGS_FILE
+skillgate claude-hook --config FILE (hook JSON on stdin)
+skillgate install --skill DIR --name NAME --lock FILE --store DIRECTORY
 Runner options: --runner bubblewrap|cgroup|vm; cgroup: --memory-mib N --tasks-max N --cpu-percent N; vm: --vm-host HOST --vm-cli PATH [--vm-ssh-config FILE]`;
 const [action, ...args] = process.argv.slice(2);
 function parse(required, optional = []) {
@@ -166,7 +166,7 @@ try {
         hookSpecificOutput: {
           hookEventName: "PreToolUse",
           permissionDecision: "deny",
-          permissionDecisionReason: "Skillwall hook input or startup failure.",
+          permissionDecisionReason: "SkillGate hook input or startup failure.",
         },
       }),
     );

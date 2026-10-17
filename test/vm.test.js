@@ -15,7 +15,7 @@ import { doctor } from "../src/sandbox.js";
 import { execute } from "../src/process.js";
 import { digest, snapshot, hash } from "../src/files.js";
 test("VM transfer round-trips verified content and rejects path traversal", async () => {
-  const dir = await mkdtemp(join(tmpdir(), "skillwall-packet-"));
+  const dir = await mkdtemp(join(tmpdir(), "skillgate-packet-"));
   try {
     const files = await packTree(resolve("examples/v1"));
     await unpackTree(files, join(dir, "copy"));
@@ -62,7 +62,7 @@ test("VM host configuration fails closed before starting SSH", async () => {
 test("guest worker performs real sandbox execution through the stdin protocol", async (t) => {
   const health = await doctor();
   if (!health.ok) {
-    if (process.env.SKILLWALL_REQUIRE_SANDBOX) assert.fail(health.reason);
+    if (process.env.SKILLGATE_REQUIRE_SANDBOX) assert.fail(health.reason);
     t.skip(health.reason);
     return;
   }

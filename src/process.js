@@ -6,8 +6,8 @@ import { StringDecoder } from "node:string_decoder";
 import { randomUUID } from "node:crypto";
 const project = resolve(fileURLToPath(new URL("..", import.meta.url)));
 export function tool(name) {
-  if (name === "strace" && process.env.SKILLWALL_STRACE)
-    return resolve(process.env.SKILLWALL_STRACE);
+  if (name === "strace" && process.env.SKILLGATE_STRACE)
+    return resolve(process.env.SKILLGATE_STRACE);
   const local = join(project, ".tools/bin", name);
   if (existsSync(local)) return local;
   const found = spawnSync("/usr/bin/which", [name], { encoding: "utf8" });
@@ -32,7 +32,7 @@ export async function execute(
     const systemd = tool("systemd-run");
     if (!systemd)
       throw new Error("cgroup runner requires systemd-run and a user manager.");
-    scope = `skillwall-${randomUUID()}.scope`;
+    scope = `skillgate-${randomUUID()}.scope`;
     args = [
       "--user",
       "--scope",

@@ -8,7 +8,7 @@ import { copyTree } from "../src/files.js";
 import { doctor } from "../src/sandbox.js";
 
 async function fixture(fn) {
-  const dir = await mkdtemp(join(tmpdir(), "skillwall-lock-"));
+  const dir = await mkdtemp(join(tmpdir(), "skillgate-lock-"));
   try {
     await copyTree(resolve("examples/v1"), join(dir, "skill"));
     await fn({
@@ -57,7 +57,7 @@ test("concurrent operations cannot replace an existing guard", async () =>
 test("accept gates updates with fresh sandbox evidence and preserves lock on HOLD", async (t) => {
   const health = await doctor();
   if (!health.ok) {
-    if (process.env.SKILLWALL_REQUIRE_SANDBOX) assert.fail(health.reason);
+    if (process.env.SKILLGATE_REQUIRE_SANDBOX) assert.fail(health.reason);
     t.skip(health.reason);
     return;
   }

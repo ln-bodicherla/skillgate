@@ -37,7 +37,7 @@ test("unresolved trace is not complete coverage", () => {
 test("report escapes executable HTML", () =>
   assert.equal(escapeHTML('<script>"&'), "&lt;script&gt;&quot;&amp;"));
 test("input symlinks are rejected", async () => {
-  const dir = await mkdtemp(join(tmpdir(), "skillwall-links-"));
+  const dir = await mkdtemp(join(tmpdir(), "skillgate-links-"));
   try {
     await mkdir(join(dir, "source"));
     await symlink("/etc/passwd", join(dir, "source", "secret"));
@@ -52,11 +52,11 @@ test("input symlinks are rejected", async () => {
 test("real namespace comparison passes identical skill and holds unwanted update", async (t) => {
   const health = await doctor();
   if (!health.ok) {
-    if (process.env.SKILLWALL_REQUIRE_SANDBOX) assert.fail(health.reason);
+    if (process.env.SKILLGATE_REQUIRE_SANDBOX) assert.fail(health.reason);
     t.skip(health.reason);
     return;
   }
-  const dir = await mkdtemp(join(tmpdir(), "skillwall-integration-"));
+  const dir = await mkdtemp(join(tmpdir(), "skillgate-integration-"));
   const before = await readFile("examples/workspace/invoices.json", "utf8");
   try {
     const options = {
@@ -93,19 +93,19 @@ test("real namespace comparison passes identical skill and holds unwanted update
 test("sandbox hides host environment and rejects writes to skill/check mounts", async (t) => {
   const health = await doctor();
   if (!health.ok) {
-    if (process.env.SKILLWALL_REQUIRE_SANDBOX) assert.fail(health.reason);
+    if (process.env.SKILLGATE_REQUIRE_SANDBOX) assert.fail(health.reason);
     t.skip(health.reason);
     return;
   }
   const { runVersion } = await import("../src/sandbox.js");
   const { writeFile } = await import("node:fs/promises");
-  const dir = await mkdtemp(join(tmpdir(), "skillwall-isolation-"));
-  process.env.SKILLWALL_TEST_SECRET = "host-secret";
+  const dir = await mkdtemp(join(tmpdir(), "skillgate-isolation-"));
+  process.env.SKILLGATE_TEST_SECRET = "host-secret";
   try {
     await mkdir(join(dir, "skill"));
     await writeFile(
       join(dir, "skill", "probe.py"),
-      `import os\nfrom pathlib import Path\nassert 'SKILLWALL_TEST_SECRET' not in os.environ\nassert not Path('/etc/passwd').exists()\nfor path in ['/skill/tampered', '/checks/tampered']:\n    try:\n        Path(path).write_text('bad')\n    except OSError:\n        pass\n    else:\n        raise AssertionError('read-only mount was writable')\n`,
+      `import os\nfrom pathlib import Path\nassert 'SKILLGATE_TEST_SECRET' not in os.environ\nassert not Path('/etc/passwd').exists()\nfor path in ['/skill/tampered', '/checks/tampered']:\n    try:\n        Path(path).write_text('bad')\n    except OSError:\n        pass\n    else:\n        raise AssertionError('read-only mount was writable')\n`,
     );
     const result = await runVersion({
       skill: join(dir, "skill"),
@@ -118,7 +118,7 @@ test("sandbox hides host environment and rejects writes to skill/check mounts", 
     });
     assert.equal(result.execution.code, 0, result.execution.stderr);
   } finally {
-    delete process.env.SKILLWALL_TEST_SECRET;
+    delete process.env.SKILLGATE_TEST_SECRET;
     await rm(dir, { recursive: true, force: true });
   }
 });

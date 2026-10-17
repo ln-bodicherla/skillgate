@@ -26,18 +26,18 @@ No system configuration is changed by this tool. Missing manager/controller supp
 This is a transport to an **existing, user-provisioned disposable Linux VM**, not a VM creator. Configure its image, RAM/vCPU/disk limits and reset strategy in your hypervisor. Do not share the host filesystem, forward host agents, or store credentials in the guest. SSH should be reachable by the host; skill sandboxes inside the guest still have isolated networking.
 
 1. Install Node.js 22+, recent Bubblewrap, strace, util-linux and the task's language runtime in the guest.
-2. Copy this repository to a fixed guest path, such as `/opt/skill-update-firewall`, readable by an unprivileged dedicated worker user.
+2. Copy this repository to a fixed guest path, such as `/opt/skillgate`, readable by an unprivileged dedicated worker user.
 3. Configure a dedicated SSH alias/key in your host SSH config and verify its host key through your normal trusted process. Batch mode and strict host-key checking are mandatory. The worker must not run as root. To keep the alias out of `~/.ssh/config`, pass a dedicated file with `--vm-ssh-config FILE`.
-4. Ensure `/usr/bin/node /opt/skill-update-firewall/src/cli.js doctor` succeeds in the guest.
+4. Ensure `/usr/bin/node /opt/skillgate/src/cli.js doctor` succeeds in the guest.
 
 ```sh
 node src/cli.js doctor --runner vm \
-  --vm-host skillwall-guest --vm-cli /opt/skill-update-firewall/src/cli.js
+  --vm-host skillgate-guest --vm-cli /opt/skillgate/src/cli.js
 
 node src/cli.js compare --old examples/v1 --new examples/v2 \
   --scenario examples/scenario.json --out reports/vm-review \
-  --runner vm --vm-host skillwall-guest \
-  --vm-cli /opt/skill-update-firewall/src/cli.js
+  --runner vm --vm-host skillgate-guest \
+  --vm-cli /opt/skillgate/src/cli.js
 ```
 
 The host sends verified file entries over stdin to the guest worker; no host paths are mounted. The guest creates temporary copies, runs Bubblewrap, verifies outputs, returns structured evidence/raw traces and removes its temporary directory. Transfer paths and hashes are checked. Requests/responses are capped at 32 MiB; each transferred directory and returned trace collection is capped at 16 MiB. Large tasks fail rather than bypassing these bounds. VM run workspaces are not copied back; hashes and observed changes remain in the report, with raw traces under `guest-traces/`.

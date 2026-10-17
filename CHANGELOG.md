@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Renamed the project from Skill Update Firewall to SkillGate. The command is now `skillgate`, environment variables use the `SKILLGATE_` prefix, and the repository is github.com/ln-bodicherla/skillgate (old URLs redirect).
+
 ## 0.2.0 — first public release
 
 - Redesigned HTML report: decision summary, finding counts, side-by-side output changes, policy tables, per-run evidence links and a searchable, filterable activity explorer (CSP-pinned inline script, no external assets).

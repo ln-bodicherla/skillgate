@@ -6,5 +6,5 @@ node_modules/
 
 # Local terminal output and release artifacts
 /node
-/skill-update-firewall@*
+/skillgate@*
 *.tgz

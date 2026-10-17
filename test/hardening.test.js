@@ -10,7 +10,7 @@ import { claudeHook, claudeSettings } from "../src/claude-hook.js";
 import { renderReport } from "../src/report.js";
 import { createHash } from "node:crypto";
 test("kernel workspace quota rejects aggregate writes and releases its namespace", async () => {
-  const dir = await mkdtemp(join(tmpdir(), "skillwall-quota-"));
+  const dir = await mkdtemp(join(tmpdir(), "skillgate-quota-"));
   let lease;
   try {
     lease = await quotaWorkspace(join(dir, "mount"), 8);
@@ -35,7 +35,7 @@ test("kernel workspace quota rejects aggregate writes and releases its namespace
   }
 });
 test("Claude hook preserves permission flow for pins and denies drift, unknown skills and missing config", async () => {
-  const dir = await mkdtemp(join(tmpdir(), "skillwall-claude-"));
+  const dir = await mkdtemp(join(tmpdir(), "skillgate-claude-"));
   try {
     const skill = join(dir, "skill");
     await copyTree(resolve("examples/v1"), skill);
