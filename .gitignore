@@ -1,0 +1,10 @@
+.tools/
+reports/
+node_modules/
+.env
+*.log
+
+# Local terminal output and release artifacts
+/node
+/skill-update-firewall@*
+*.tgz

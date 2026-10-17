@@ -1,0 +1,5 @@
+Skill Update Firewall
+Copyright 2026 Skill Update Firewall contributors
+
+Bubblewrap, strace, util-linux, Node.js and Python are external runtime tools,
+not distributed as part of this repository. Their respective licenses apply.

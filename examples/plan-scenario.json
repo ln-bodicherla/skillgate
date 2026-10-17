@@ -1,0 +1,10 @@
+{
+  "name": "Recorded tool plan",
+  "workspace": "workspace",
+  "checks": "checks",
+  "adapter": { "type": "tool-plan", "file": "tools.json" },
+  "verify": ["/usr/bin/python3", "/checks/verify.py"],
+  "allowedWrites": ["result.txt"],
+  "timeoutMs": 10000,
+  "repetitions": 2
+}

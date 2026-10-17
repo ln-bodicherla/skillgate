@@ -1,0 +1,5 @@
+{
+  "calls": [
+    { "name": "summarize", "command": ["/usr/bin/python3", "/skill/run.py"] }
+  ]
+}

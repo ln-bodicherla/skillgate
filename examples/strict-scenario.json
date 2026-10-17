@@ -1,0 +1,13 @@
+{
+  "name": "Strict writable-file mounts",
+  "workspace": "workspace",
+  "checks": "checks",
+  "command": ["/usr/bin/python3", "/skill/run.py"],
+  "verify": ["/usr/bin/python3", "/checks/verify.py"],
+  "allowedWrites": ["result.txt"],
+  "timeoutMs": 10000,
+  "repetitions": 2,
+  "policy": {
+    "enforceWrites": true
+  }
+}

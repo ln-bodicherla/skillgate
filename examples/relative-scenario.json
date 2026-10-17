@@ -1,0 +1,14 @@
+{
+  "name": "Relative workspace paths",
+  "workspace": "workspace",
+  "checks": "checks",
+  "command": [
+    "/usr/bin/python3",
+    "-c",
+    "import json; from pathlib import Path; Path('result.txt').write_text(f'Total: {sum(json.loads(Path(\"invoices.json\").read_text()))}\\n')"
+  ],
+  "verify": ["/usr/bin/python3", "/checks/verify.py"],
+  "allowedWrites": ["result.txt"],
+  "timeoutMs": 10000,
+  "repetitions": 2
+}

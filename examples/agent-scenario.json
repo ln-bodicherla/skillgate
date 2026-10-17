@@ -1,0 +1,12 @@
+{
+  "name": "Interactive agent invoice workflow",
+  "workspace": "workspace",
+  "checks": "checks",
+  "command": ["/usr/bin/python3", "/skill/agent.py"],
+  "adapter": { "type": "agent" },
+  "verify": ["/usr/bin/python3", "/checks/verify.py"],
+  "allowedWrites": ["result.txt"],
+  "timeoutMs": 10000,
+  "repetitions": 2,
+  "policy": { "network": "deny", "allowedProcesses": ["/usr/bin/python3"] }
+}
